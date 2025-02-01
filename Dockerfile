@@ -4,15 +4,11 @@ FROM node:16-slim
 # Set the working directory
 WORKDIR /app
 
-# Set NPM registry to avoid network issues
-RUN npm config set registry http://registry.npmjs.org/
-
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Install dependencies with retry logic and fix potential network issues
-RUN npm cache clean --force && \
-    npm install --legacy-peer-deps --no-audit --no-fund
+# Install dependencies
+RUN npm install
 
 # Copy the rest of the application code
 COPY . .
